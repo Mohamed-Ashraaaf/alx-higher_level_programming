@@ -7,8 +7,9 @@ uses the GitHub API to display your id.
 import requests
 import sys
 
-if __name__ == "__main__":
-    username, password = sys.argv[1], sys.argv[2]
+if __name__ == '__main__':
     url = "https://api.github.com/user"
-    response = requests.get(url, auth=(username, password))
-    print(response.json()["id"]) if response.status_code == 200 else print(f"Error code: {response.status_code}")
+    username, password = sys.argv[1], sys.argv[2]
+    response = requests.get("https://api.github.com/user", auth=(username, password))
+    res_dict = response.json()
+    print(res_dict.get('id'))
