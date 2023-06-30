@@ -10,6 +10,6 @@ import sys
 if __name__ == '__main__':
     url = "https://api.github.com/user"
     username, password = sys.argv[1], sys.argv[2]
-    response = requests.get("https://api.github.com/user", auth=(username, password))
+    response = requests.get(url, auth=(username, password))
     res_dict = response.json()
     print(res_dict.get('id'))
