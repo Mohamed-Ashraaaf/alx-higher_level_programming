@@ -6,15 +6,19 @@ uses the GitHub API to display your id.
 import requests
 import sys
 
-if __name__ == "__main__":
-    username = sys.argv[1]
-    password = sys.argv[2]
-
+def get_github_user_id(username, password):
     url = "https://api.github.com/user"
     response = requests.get(url, auth=(username, password))
 
     if response.status_code == 200:
         data = response.json()
-        print(data["id"])
+        return data["id"]
     else:
-        print("Error code: {}".format(response.status_code))
+        return "Error code: {}".format(response.status_code)
+
+if __name__ == "__main__":
+    username = sys.argv[1]
+    password = sys.argv[2]
+
+    user_id = get_github_user_id(username, password)
+    print(user_id)
