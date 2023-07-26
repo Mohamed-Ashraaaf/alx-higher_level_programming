@@ -1,27 +1,21 @@
 #!/usr/bin/node
+
 const request = require('request');
+const url = process.argv[2];
 
-const apiUrl = process.argv[2];
-
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  if (response.statusCode !== 200) {
-    console.error('Error:', response.statusCode);
-    return;
-  }
-
-  const tasks = JSON.parse(body);
-
-  const completedTasks = tasks.reduce((acc, task) => {
-    if (task.completed) {
-      acc[task.userId] = (acc[task.userId] || 0) + 1;
+request(url, (err, response, body) => {
+  if (err) console.log(err);
+  else {
+    const resp = {};
+    const json = JSON.parse(body);
+    for (let i = 0; i < json.length; i++) {
+      if (json[i].completed === true) {
+        if (resp[json[i].userId] === undefined) {
+          resp[json[i].userId] = 0;
+        }
+        resp[json[i].userId]++;
+      }
     }
-    return acc;
-  }, {});
-
-  console.log(JSON.stringify(completedTasks));
+    console.log(resp);
+  }
 });
