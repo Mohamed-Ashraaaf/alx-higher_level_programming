@@ -18,14 +18,10 @@ request(apiUrl, (error, response, body) => {
 
   const completedTasks = tasks.reduce((acc, task) => {
     if (task.completed) {
-      if (acc[task.userId]) {
-        acc[task.userId] += 1;
-      } else {
-        acc[task.userId] = 1;
-      }
+      acc[task.userId] = (acc[task.userId] || 0) + 1;
     }
     return acc;
   }, {});
 
-  console.log(completedTasks);
+  console.log(JSON.stringify(completedTasks));
 });
